@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>老大的练手网站</title>
+  <style>
+    body { font-family: "微软雅黑", sans-serif; background-color: #f0f8ff; padding: 20px; }
+    h1 { color: #3333cc; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #msg { margin-top: 15px; color: #cc3300; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>欢迎来到老大的练手网站！</h1>
+  <p>点下面按钮看看神奇效果：</p>
+  <button onclick="showMessage()">点我！</button>
+  <div id="msg"></div>
+
+  <script>
+    function showMessage() {
+      const msg = document.getElementById('msg');
+      msg.textContent = '恭喜你，点击成功，网站活过来了！🎉';
+    }
+  </script>
+</body>
+</html>
