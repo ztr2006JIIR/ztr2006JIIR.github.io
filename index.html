@@ -1,29 +1,365 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <title>张的练手网站</title>
-  <style>
-    body { font-family: "微软雅黑", sans-serif; background-color: #f0f8ff; padding: 20px; }
-    h1 { color: #3333cc; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    #msg { margin-top: 15px; color: #cc3300; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张天一升学宴邀请函</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f9f3e9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/free-vector/elegant-gold-background_52683-62728.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 48px;
+            color: #d4af37;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+        
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+            margin: 20px 0;
+        }
+        
+        .content {
+            line-height: 1.8;
+            font-size: 18px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            color: #d4af37;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: right;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #d4af37;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: #c9a227;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .guests-list {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .guest-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #d4af37;
+            opacity: 0.7;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-  <h1>欢迎来到张天润的练手网站！</h1>
-  <p>点下面按钮：</p>
-  <button onclick="showMessage()">点我！</button>
-  <div id="msg"></div>
-
-  <script>
-    function showMessage() {
-      const msg = document.getElementById('msg');
-      msg.textContent = '点击成功，网站活过来了！🎉';
-    }
-  </script>
+    <div class="container">
+        <div class="header">
+            <div class="title">升学宴</div>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="content">
+            <p>尊敬的_______：</p>
+            <p>您好！</p>
+            <p>春华秋实，硕果累累。在这个收获的季节里，我们怀着无比喜悦的心情与您分享一个好消息——小女<span class="highlight">张天一</span>经过多年的勤奋努力，在2024年高考中取得了优异的成绩，并荣幸地被<span class="highlight">宁夏大学</span>录取。</p>
+            <p>为了感谢各位亲朋好友一直以来的关心与支持，我们诚挚邀请您参加她的升学宴，共同见证这一重要时刻，分享我们的喜悦与感恩。</p>
+            <p><strong>时间：</strong>2024年8月16日（星期五）晚上</p>
+            <p><strong>地点：</strong>和泰宾馆（具体厅位可现场咨询）</p>
+            <p>您的到来将为我们的宴会增添无限光彩！期待与您共聚一堂，同庆同乐！</p>
+        </div>
+        
+        <div class="footer">
+            <p>家长：<span class="highlight">张世盾、牛小合</span> 敬邀</p>
+            <p>联系电话：13995440435，15709640855</p>
+        </div>
+        
+        <div class="btn-container">
+            <button class="btn" id="attendBtn">参加宴会</button>
+        </div>
+    </div>
+    
+    <!-- 参加宴会模态框 -->
+    <div id="attendModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>参加宴会登记</h2>
+            <div class="form-group">
+                <label for="name">您的姓名</label>
+                <input type="text" id="name" placeholder="请输入您的姓名">
+            </div>
+            <div class="form-group">
+                <label for="phone">联系电话</label>
+                <input type="text" id="phone" placeholder="请输入您的联系电话">
+            </div>
+            <div class="form-group">
+                <label for="count">参加人数</label>
+                <input type="number" id="count" min="1" value="1">
+            </div>
+            <div class="form-group">
+                <label for="note">备注</label>
+                <textarea id="note" rows="3" placeholder="如有特殊需求请在此备注"></textarea>
+            </div>
+            <button class="btn" id="submitBtn">提交</button>
+            
+            <div class="guests-list" id="guestsList">
+                <h3>已确认参加的宾客</h3>
+                <!-- 宾客列表将在这里动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 获取模态框元素
+        const modal = document.getElementById("attendModal");
+        const btn = document.getElementById("attendBtn");
+        const span = document.getElementsByClassName("close")[0];
+        const submitBtn = document.getElementById("submitBtn");
+        const guestsList = document.getElementById("guestsList");
+        
+        // 打开模态框
+        btn.onclick = function() {
+            modal.style.display = "block";
+            loadGuests();
+        }
+        
+        // 关闭模态框
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // 提交表单
+        submitBtn.onclick = function() {
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const count = document.getElementById("count").value;
+            const note = document.getElementById("note").value;
+            
+            if (!name || !phone) {
+                alert("请填写姓名和联系电话");
+                return;
+            }
+            
+            const guest = {
+                name,
+                phone,
+                count,
+                note,
+                time: new Date().toLocaleString()
+            };
+            
+            // 保存到本地存储
+            saveGuest(guest);
+            
+            // 重新加载列表
+            loadGuests();
+            
+            // 清空表单
+            document.getElementById("name").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("count").value = "1";
+            document.getElementById("note").value = "";
+            
+            alert("提交成功！感谢您的参与！");
+        }
+        
+        // 保存宾客信息
+        function saveGuest(guest) {
+            let guests = JSON.parse(localStorage.getItem('guests')) || [];
+            guests.push(guest);
+            localStorage.setItem('guests', JSON.stringify(guests));
+        }
+        
+        // 加载宾客列表
+        function loadGuests() {
+            const guests = JSON.parse(localStorage.getItem('guests')) || [];
+            guestsList.innerHTML = '<h3>已确认参加的宾客</h3>';
+            
+            if (guests.length === 0) {
+                guestsList.innerHTML += '<p>暂无宾客信息</p>';
+                return;
+            }
+            
+            guests.forEach((guest, index) => {
+                const guestItem = document.createElement('div');
+                guestItem.className = 'guest-item';
+                guestItem.innerHTML = `
+                    <div>
+                        <strong>${guest.name}</strong> (${guest.phone}) 
+                        <br>人数: ${guest.count} 
+                        ${guest.note ? '<br>备注: ' + guest.note : ''}
+                    </div>
+                    <div>${guest.time}</div>
+                `;
+                guestsList.appendChild(guestItem);
+            });
+        }
+        
+        // 创建五彩纸屑效果
+        function createConfetti() {
+            const colors = ['#d4af37', '#ff6b6b', '#48dbfb', '#1dd1a1', '#f368e0'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                
+                document.body.appendChild(confetti);
+                
+                // 设置动画
+                const keyframes = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                
+                const style = document.createElement('style');
+                style.innerHTML = keyframes;
+                document.head.appendChild(style);
+                
+                // 移除元素
+                setTimeout(() => {
+                    confetti.remove();
+                    style.remove();
+                }, 5000);
+            }
+        }
+        
+        // 页面加载时创建一些五彩纸屑
+        window.onload = function() {
+            createConfetti();
+            setInterval(createConfetti, 3000);
+        };
+    </script>
 </body>
 </html>
-
-
-
