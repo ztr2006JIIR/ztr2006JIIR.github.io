@@ -83,12 +83,21 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 5px;
         }
         
         .btn:hover {
             background-color: #c9a227;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn.admin {
+            background-color: #6c757d;
+        }
+        
+        .btn.danger {
+            background-color: #dc3545;
         }
         
         .modal {
@@ -109,9 +118,11 @@
             padding: 30px;
             border: 1px solid #888;
             width: 80%;
-            max-width: 600px;
+            max-width: 800px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
         .close {
@@ -155,6 +166,15 @@
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+        
+        .guest-info {
+            flex: 1;
+        }
+        
+        .guest-actions {
+            margin-left: 20px;
         }
         
         .confetti {
@@ -164,6 +184,47 @@
             background-color: #d4af37;
             opacity: 0.7;
             border-radius: 50%;
+        }
+        
+        .admin-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            min-width: 100px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4af37;
+        }
+        
+        .admin-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .password-input {
+            margin: 10px 0;
+            padding: 8px;
+            width: 200px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
@@ -191,6 +252,7 @@
         
         <div class="btn-container">
             <button class="btn" id="attendBtn">参加宴会</button>
+            <button class="btn admin" id="adminBtn">管理员登录</button>
         </div>
     </div>
     
@@ -216,37 +278,97 @@
                 <textarea id="note" rows="3" placeholder="如有特殊需求请在此备注"></textarea>
             </div>
             <button class="btn" id="submitBtn">提交</button>
+        </div>
+    </div>
+    
+    <!-- 管理员面板模态框 -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>管理员面板</h2>
             
-            <div class="guests-list" id="guestsList">
-                <h3>已确认参加的宾客</h3>
+            <div class="stats">
+                <div class="stat-item">
+                    <div>总人数</div>
+                    <div class="stat-value" id="totalGuests">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>总宾客数</div>
+                    <div class="stat-value" id="totalPeople">0</div>
+                </div>
+            </div>
+            
+            <div class="guests-list" id="adminGuestsList">
+                <h3>宾客名单</h3>
                 <!-- 宾客列表将在这里动态生成 -->
             </div>
         </div>
     </div>
     
+    <!-- 管理员登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>管理员登录</h2>
+            <div class="admin-login">
+                <p>请输入管理员密码</p>
+                <input type="password" id="adminPassword" class="password-input" placeholder="密码">
+                <div>
+                    <button class="btn" id="loginBtn">登录</button>
+                </div>
+                <p id="loginError" style="color: red; display: none;">密码错误，请重试</p>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        // 获取模态框元素
-        const modal = document.getElementById("attendModal");
-        const btn = document.getElementById("attendBtn");
-        const span = document.getElementsByClassName("close")[0];
-        const submitBtn = document.getElementById("submitBtn");
-        const guestsList = document.getElementById("guestsList");
+        // 管理员密码 (您可以在使用时修改这个密码)
+        const ADMIN_PASSWORD = "123456";
         
-        // 打开模态框
-        btn.onclick = function() {
-            modal.style.display = "block";
-            loadGuests();
+        // 获取模态框元素
+        const attendModal = document.getElementById("attendModal");
+        const adminModal = document.getElementById("adminModal");
+        const loginModal = document.getElementById("loginModal");
+        const attendBtn = document.getElementById("attendBtn");
+        const adminBtn = document.getElementById("adminBtn");
+        const closeBtns = document.getElementsByClassName("close");
+        const submitBtn = document.getElementById("submitBtn");
+        const loginBtn = document.getElementById("loginBtn");
+        const adminGuestsList = document.getElementById("adminGuestsList");
+        const totalGuests = document.getElementById("totalGuests");
+        const totalPeople = document.getElementById("totalPeople");
+        
+        // 打开参加宴会模态框
+        attendBtn.onclick = function() {
+            attendModal.style.display = "block";
+        }
+        
+        // 打开管理员登录模态框
+        adminBtn.onclick = function() {
+            loginModal.style.display = "block";
         }
         
         // 关闭模态框
-        span.onclick = function() {
-            modal.style.display = "none";
+        for (let i = 0; i < closeBtns.length; i++) {
+            closeBtns[i].onclick = function() {
+                attendModal.style.display = "none";
+                adminModal.style.display = "none";
+                loginModal.style.display = "none";
+                document.getElementById("loginError").style.display = "none";
+            }
         }
         
         // 点击模态框外部关闭
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == attendModal) {
+                attendModal.style.display = "none";
+            }
+            if (event.target == adminModal) {
+                adminModal.style.display = "none";
+            }
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
+                document.getElementById("loginError").style.display = "none";
             }
         }
         
@@ -273,9 +395,6 @@
             // 保存到本地存储
             saveGuest(guest);
             
-            // 重新加载列表
-            loadGuests();
-            
             // 清空表单
             document.getElementById("name").value = "";
             document.getElementById("phone").value = "";
@@ -283,6 +402,22 @@
             document.getElementById("note").value = "";
             
             alert("提交成功！感谢您的参与！");
+            attendModal.style.display = "none";
+        }
+        
+        // 管理员登录
+        loginBtn.onclick = function() {
+            const password = document.getElementById("adminPassword").value;
+            
+            if (password === ADMIN_PASSWORD) {
+                loginModal.style.display = "none";
+                adminModal.style.display = "block";
+                loadAdminGuests();
+                document.getElementById("adminPassword").value = "";
+                document.getElementById("loginError").style.display = "none";
+            } else {
+                document.getElementById("loginError").style.display = "block";
+            }
         }
         
         // 保存宾客信息
@@ -292,13 +427,22 @@
             localStorage.setItem('guests', JSON.stringify(guests));
         }
         
-        // 加载宾客列表
-        function loadGuests() {
+        // 加载管理员宾客列表
+        function loadAdminGuests() {
             const guests = JSON.parse(localStorage.getItem('guests')) || [];
-            guestsList.innerHTML = '<h3>已确认参加的宾客</h3>';
+            adminGuestsList.innerHTML = '<h3>宾客名单</h3>';
+            
+            // 计算总人数
+            let totalPeopleCount = 0;
+            guests.forEach(guest => {
+                totalPeopleCount += parseInt(guest.count) || 1;
+            });
+            
+            totalGuests.textContent = guests.length;
+            totalPeople.textContent = totalPeopleCount;
             
             if (guests.length === 0) {
-                guestsList.innerHTML += '<p>暂无宾客信息</p>';
+                adminGuestsList.innerHTML += '<p>暂无宾客信息</p>';
                 return;
             }
             
@@ -306,15 +450,28 @@
                 const guestItem = document.createElement('div');
                 guestItem.className = 'guest-item';
                 guestItem.innerHTML = `
-                    <div>
+                    <div class="guest-info">
                         <strong>${guest.name}</strong> (${guest.phone}) 
                         <br>人数: ${guest.count} 
                         ${guest.note ? '<br>备注: ' + guest.note : ''}
+                        <br><small>${guest.time}</small>
                     </div>
-                    <div>${guest.time}</div>
+                    <div class="guest-actions">
+                        <button class="btn danger" onclick="deleteGuest(${index})">删除</button>
+                    </div>
                 `;
-                guestsList.appendChild(guestItem);
+                adminGuestsList.appendChild(guestItem);
             });
+        }
+        
+        // 删除宾客
+        window.deleteGuest = function(index) {
+            if (confirm('确定要删除这条记录吗？')) {
+                let guests = JSON.parse(localStorage.getItem('guests')) || [];
+                guests.splice(index, 1);
+                localStorage.setItem('guests', JSON.stringify(guests));
+                loadAdminGuests();
+            }
         }
         
         // 创建五彩纸屑效果
@@ -363,4 +520,3 @@
     </script>
 </body>
 </html>
-
